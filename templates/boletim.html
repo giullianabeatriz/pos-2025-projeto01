@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Boletim</h2>
+  <form method="get" class="mb-3">
+    <label for="ano">Selecionar ano:</label>
+    <select name="ano" onchange="this.form.submit()" class="form-select w-auto d-inline-block">
+      {% for y in range(2022, 2025) %}
+        <option value="{{ y }}" {% if y|string == ano %}selected{% endif %}>{{ y }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  {% for disciplina in boletim %}
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5>{{ disciplina.disciplina }}</h5>
+        <p><strong>Média Final:</strong> {{ disciplina.media_final }}</p>
+        <p><strong>Situação:</strong> {{ disciplina.situacao }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

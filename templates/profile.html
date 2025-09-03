@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Perfil do Usuário</h2>
+  <div class="card">
+        <p><strong>Nome:</strong> {{ user.nome }}</p>
+        <p><strong>Matrícula:</strong> {{ user.matricula }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Curso:</strong> {{ user.vinculo.curso }}</p>
+      </div>
+{% endblock %}

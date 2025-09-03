@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="text-center">
+    <h1>Bem-vindo ao Cliente SUAP</h1>
+    <p>Use seu login institucional para acessar seu perfil e boletim.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}">Login com SUAP</a>
+  </div>
+{% endblock %}

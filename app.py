@@ -53,22 +53,40 @@ def profile():
         return redirect(url_for('index'))
     return render_template("profile.html", user=session['user'], avatar=session['avatar_url'])
 
-@app.route('/boletim')
+@app.route('/boletim', methods=['GET', 'POST'])
 def boletim():
     if 'oauth_token' not in session:
         return redirect(url_for('index'))
 
-    ano = request.args.get('ano', '2023')
-    suap = make_suap_session(token=session['oauth_token'])
-    boletim_response = suap.get(Config.SUAP_BASE_URL + f"/api/v2/minhas-informacoes/boletim/{ano}/")
-    if boletim_response.status_code == 200:
-        boletim_json = boletim_response.json()
-        # Se o boletim é um dicionário, converta para lista
-        boletim = list(boletim_json.values()) if isinstance(boletim_json, dict) else boletim_json
-    else:
-        boletim = []
+    # Trate POST para filtro de período
+    if request.method == "POST":
+        periodo = request.form.get("periodo", "2025.1")
+        return redirect(url_for("boletim", periodo=periodo))
 
-    return render_template("boletim.html", boletim=boletim, ano=ano, user=session['user'], avatar=session['avatar_url'])
+    # Trate GET para exibir boletim
+    periodo = request.args.get("periodo", "2025.1")
+    ano_letivo, periodo_letivo = periodo.split(".")
+
+    suap = make_suap_session(token=session['oauth_token'])
+    user_response = suap.get(Config.SUAP_BASE_URL + "/api/v2/minhas-informacoes/meus-dados/")
+    user = user_response.json() if user_response.status_code == 200 else {}
+
+    boletim_response = suap.get(Config.SUAP_BASE_URL + f"/api/v2/minhas-informacoes/boletim/{ano_letivo}/{periodo_letivo}/")
+    boletim_data = boletim_response.json() if boletim_response.status_code == 200 else []
+
+    # Opcional: buscar períodos disponíveis
+    periodos_response = suap.get(Config.SUAP_BASE_URL + "/api/v2/minhas-informacoes/meus-periodos-letivos/")
+    periodos = periodos_response.json() if periodos_response.status_code == 200 else []
+
+    return render_template(
+        "boletim.html",
+        user=user,
+        boletim_data=boletim_data,
+        periodos=periodos,
+        selected_periodo=periodo,
+        avatar=session.get('avatar_url')
+    )
+
 @app.route('/logout')
 def logout():
     session.clear()

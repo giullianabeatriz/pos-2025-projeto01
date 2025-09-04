@@ -1,10 +1,22 @@
-# Projeto da Unidade 02 de POS
-- Data de entrega: **12/09/2025**
-- Sem prorrogações!
-
-## Instruções
-- Sigam as instruções da tarefa no slide: https://dvcirilo-ifrn.github.io/pos/slides/aula13.html#17
-- Apenas um repositório por dupla.
-
-## Equipe
+## Aluna
 - Giulliana Beatriz
+
+### Passos para rodar o projeto
+
+
+**Crie um ambiente virtual:**
+   python -m venv venv
+
+**Ative o ambiente virtual:**
+   .venv/Scripts/activate
+
+**Instale as dependências:**
+   pip install -r requirements.txt
+
+**Configure o SUAP:**
+   Abra o arquivo `config.py` e coloque seu `CLIENT_ID`, `CLIENT_SECRET` e `REDIRECT_URI` cadastrados no SUAP.
+
+**Acesse no navegador:**
+   http://localhost:8888
+
+Pronto!

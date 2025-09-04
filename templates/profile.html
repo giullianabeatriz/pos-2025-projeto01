@@ -1,10 +1,19 @@
+<!-- filepath: c:\Users\giull\OneDrive\Área de Trabalho\pos-2025-projeto01-1\templates\profile.html -->
 {% extends "base.html" %}
 {% block content %}
-  <h2>Perfil do Usuário</h2>
-  <div class="card">
-        <p><strong>Nome:</strong> {{ user.nome }}</p>
-        <p><strong>Matrícula:</strong> {{ user.matricula }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Curso:</strong> {{ user.vinculo.curso }}</p>
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card shadow-lg border-0">
+      <div class="card-body d-flex flex-column align-items-center">
+        <img src="{{ avatar or user.avatar_url or user.avatar or user.url_foto_150x200 }}" alt="avatar" width="120" height="120" class="rounded-circle mb-3 border border-3 border-primary">
+        <h3 class="mb-1">{{ user.nome_usual }}</h3>
+        <ul class="list-group w-100 mb-3">
+          <li class="list-group-item"><strong>Matrícula:</strong> {{ user.matricula }}</li>
+          <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+          <li class="list-group-item"><strong>Curso:</strong> {{ user.vinculo.curso }}</li>
+        </ul>
       </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
